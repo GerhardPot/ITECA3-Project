@@ -1,0 +1,30 @@
+﻿namespace PCRepairShop.Data
+{
+    public enum InvType
+    {
+        Smartwatch,
+        Smartphone,
+        Tablet,
+        Laptop,
+        C_Case,
+        C_PSU,
+        C_Motherboard,
+        C_CPU,
+        C_RAM,
+        C_GPU,
+        C_Daughterboards,
+        C_HDD,
+        C_SSD,
+        C_CaseFans,
+        C_AirCooler,
+        C_WaterCooler,
+        C_Other,
+        Monitor,
+        Keyboard,
+        Mouse,
+        Headphones,
+        Microphone,
+        Headset,
+        Other
+    }
+}
