@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using pcrepairshop.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<pcrepairshopDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("pcrepairshopDbContext") ?? throw new InvalidOperationException("Connection string 'pcrepairshopDbContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
