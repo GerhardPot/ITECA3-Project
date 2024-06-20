@@ -1,20 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace pcrepairshop.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        [Key] public int Id { get; set; }
+        //[Key] public int Id { get; set; }
+        [Required] [MaxLength(40)]
         public string Name { get; set; }
+        [Required] [MaxLength(40)] 
         public string Surname { get; set; }
+        [Required] [DataType(DataType.EmailAddress)] 
         public string Email { get; set; }
+        [Required] [DataType(DataType.Password)] [StringLength(32, ErrorMessage = "The password must be shorter than 32 characters", MinimumLength = 10)]
         public string Password { get; set; }
-        public string CellNumber { get; set; }
-        public string Street { get; set; }
-        public string Suburb { get; set; }
-        public string City { get; set; }
-        public int PostalCode { get; set; }
+        [Required] [DataType(DataType.PhoneNumber)] public string CellNumber { get; set; }
+        [Required] public string Street { get; set; }
+        [Required] public string Suburb { get; set; }
+        [Required] public string City { get; set; }
+        [Required] public int PostalCode { get; set; }
         public string Role { get; set; }
-        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+        public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     }
 }
