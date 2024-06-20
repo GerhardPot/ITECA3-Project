@@ -11,7 +11,7 @@ using pcrepairshop.Data;
 namespace pcrepairshop.Migrations
 {
     [DbContext(typeof(pcrepairshopDbContext))]
-    [Migration("20240620111455_RecreateDB")]
+    [Migration("20240620135819_RecreateDB")]
     partial class RecreateDB
     {
         /// <inheritdoc />
@@ -91,6 +91,10 @@ namespace pcrepairshop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
