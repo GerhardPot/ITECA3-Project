@@ -12,8 +12,8 @@ using pcrepairshop.Data;
 namespace pcrepairshop.Migrations
 {
     [DbContext(typeof(pcrepairshopDbContext))]
-    [Migration("20240620151248_Identity")]
-    partial class Identity
+    [Migration("20240620164949_RemovedInventory")]
+    partial class RemovedInventory
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,24 +158,6 @@ namespace pcrepairshop.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("pcrepairshop.Models.Inventory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Inventory");
-                });
-
             modelBuilder.Entity("pcrepairshop.Models.Ticket", b =>
                 {
                     b.Property<int>("Id")
@@ -184,10 +166,12 @@ namespace pcrepairshop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("InitialStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("DeviceDescription")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("InventoryId")
+                    b.Property<int>("InitialStatus")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -197,8 +181,6 @@ namespace pcrepairshop.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("InventoryId");
 
                     b.HasIndex("UserId");
 
@@ -362,24 +344,11 @@ namespace pcrepairshop.Migrations
 
             modelBuilder.Entity("pcrepairshop.Models.Ticket", b =>
                 {
-                    b.HasOne("pcrepairshop.Models.Inventory", "Inventory")
-                        .WithMany("Tickets")
-                        .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("pcrepairshop.Models.User", "User")
                         .WithMany("Tickets")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("Inventory");
-
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("pcrepairshop.Models.Inventory", b =>
-                {
-                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("pcrepairshop.Models.User", b =>

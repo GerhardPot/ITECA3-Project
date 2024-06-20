@@ -18,6 +18,5 @@ namespace pcrepairshop.Data
 
         public DbSet<pcrepairshop.Models.Ticket> Ticket { get; set; } = default!;
         public DbSet<pcrepairshop.Models.User> User { get; set; } = default!;
-        public DbSet<pcrepairshop.Models.Inventory> Inventory { get; set; } = default!;
     }
 }

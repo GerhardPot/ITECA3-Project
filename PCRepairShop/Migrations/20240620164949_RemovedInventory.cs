@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace pcrepairshop.Migrations
 {
     /// <inheritdoc />
-    public partial class Identity : Migration
+    public partial class RemovedInventory : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -57,19 +57,6 @@ namespace pcrepairshop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Inventory",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Inventory", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,8 +173,8 @@ namespace pcrepairshop.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InitialStatus = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    InventoryId = table.Column<int>(type: "int", nullable: false)
+                    DeviceDescription = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -197,12 +184,6 @@ namespace pcrepairshop.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Ticket_Inventory_InventoryId",
-                        column: x => x.InventoryId,
-                        principalTable: "Inventory",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -245,11 +226,6 @@ namespace pcrepairshop.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ticket_InventoryId",
-                table: "Ticket",
-                column: "InventoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Ticket_UserId",
                 table: "Ticket",
                 column: "UserId");
@@ -281,9 +257,6 @@ namespace pcrepairshop.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Inventory");
         }
     }
 }

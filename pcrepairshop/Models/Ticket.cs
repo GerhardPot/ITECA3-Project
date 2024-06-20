@@ -28,9 +28,8 @@ namespace pcrepairshop.Models
         [Key] public int Id { get; set; }
         [Required] public InitialStatus InitialStatus { get; set; }
         [Required] public Status Status { get; set; }
-        //[ForeignKey("User")] public int UserId { get; set; }
+        [Required] [StringLength(200, ErrorMessage = "The description must be less than 200 characters", MinimumLength = 10)]
+        public string DeviceDescription { get; set; }
         public User User { get; set; }
-        [ForeignKey("Inventory")] public int InventoryId { get; set; }
-        public Inventory Inventory { get; set; }
     }
 }

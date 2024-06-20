@@ -11,7 +11,7 @@ namespace pcrepairshop.Models
         public string Surname { get; set; }
         [Required] [DataType(DataType.EmailAddress)] 
         public string Email { get; set; }
-        [Required] [DataType(DataType.Password)] [StringLength(32, ErrorMessage = "The password must be shorter than 32 characters", MinimumLength = 10)]
+        [Required] [DataType(DataType.Password)] [StringLength(32, ErrorMessage = "The password must be 10 - 32 characters", MinimumLength = 10)]
         public string Password { get; set; }
         [Required] [DataType(DataType.PhoneNumber)] public string CellNumber { get; set; }
         [Required] public string Street { get; set; }
