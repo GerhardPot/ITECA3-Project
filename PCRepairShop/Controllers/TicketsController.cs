@@ -49,8 +49,8 @@ namespace pcrepairshop.Controllers
         // GET: Tickets/Create
         public IActionResult Create()
         {
-            ViewData["InventoryId"] = new SelectList(_context.Set<Inventory>(), "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id");
+            ViewData["InventoryId"] = new SelectList(_context.Inventory, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace pcrepairshop.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InventoryId"] = new SelectList(_context.Set<Inventory>(), "Id", "Id", ticket.InventoryId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id", ticket.UserId);
+            ViewData["InventoryId"] = new SelectList(_context.Inventory, "Id", "Id", ticket.InventoryId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", ticket.UserId);
             return View(ticket);
         }
 
@@ -85,8 +85,8 @@ namespace pcrepairshop.Controllers
             {
                 return NotFound();
             }
-            ViewData["InventoryId"] = new SelectList(_context.Set<Inventory>(), "Id", "Id", ticket.InventoryId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id", ticket.UserId);
+            ViewData["InventoryId"] = new SelectList(_context.Inventory, "Id", "Id", ticket.InventoryId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", ticket.UserId);
             return View(ticket);
         }
 
@@ -122,8 +122,8 @@ namespace pcrepairshop.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InventoryId"] = new SelectList(_context.Set<Inventory>(), "Id", "Id", ticket.InventoryId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id", ticket.UserId);
+            ViewData["InventoryId"] = new SelectList(_context.Inventory, "Id", "Id", ticket.InventoryId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", ticket.UserId);
             return View(ticket);
         }
 

@@ -1,9 +1,28 @@
-﻿using pcrepairshop.Data.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pcrepairshop.Models
 {
+    public enum Status
+    {
+        Pickup = 1,
+        Delivery,
+        Repair,
+        Ewaste,
+        Warehouse,
+        Inspection,
+        Repairing,
+        Testing,
+        Approved,
+        Closed
+    }
+
+    public enum InitialStatus
+    {
+        Repair = 1,
+        Ewaste
+    }
+
     public class Ticket
     {
         [Key] public int Id { get; set; }
