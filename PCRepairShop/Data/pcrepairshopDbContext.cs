@@ -9,14 +9,18 @@ using pcrepairshop.Models;
 
 namespace pcrepairshop.Data
 {
-    public class pcrepairshopDbContext : IdentityDbContext<User>
+    public class PCrepairshopDbContext : IdentityDbContext<User>
     {
-        public pcrepairshopDbContext (DbContextOptions<pcrepairshopDbContext> options)
+        public PCrepairshopDbContext (DbContextOptions<PCrepairshopDbContext> options)
             : base(options)
         {
         }
 
-        public DbSet<pcrepairshop.Models.Ticket> Ticket { get; set; } = default!;
-        public DbSet<pcrepairshop.Models.User> User { get; set; } = default!;
+        public DbSet<Ticket> Ticket { get; set; } = default!;
+        public DbSet<User> User { get; set; } = default!;
+        public DbSet<InvType> InvType { get; set; } = default!;
+        public DbSet<Status> Status{ get; set; } = default!;
+        public DbSet<InitStatus> InitStatus{ get; set; } = default!;
+
     }
 }

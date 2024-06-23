@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pcrepairshop.Data;
 
@@ -11,9 +12,11 @@ using pcrepairshop.Data;
 namespace pcrepairshop.Migrations
 {
     [DbContext(typeof(PCrepairshopDbContext))]
-    partial class PCrepairshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240623084717_TicketFix")]
+    partial class TicketFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,23 +219,27 @@ namespace pcrepairshop.Migrations
 
                     b.Property<string>("DeviceDescription")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InitialStatus")
                         .HasColumnType("int");
 
                     b.Property<int>("InventoryType")
+                        .HasMaxLength(200)
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("User")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("User")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserValueId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserValueId");
 
                     b.ToTable("Ticket");
                 });
@@ -366,6 +373,15 @@ namespace pcrepairshop.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("pcrepairshop.Models.Ticket", b =>
+                {
+                    b.HasOne("pcrepairshop.Models.User", "UserValue")
+                        .WithMany()
+                        .HasForeignKey("UserValueId");
+
+                    b.Navigation("UserValue");
                 });
 #pragma warning restore 612, 618
         }

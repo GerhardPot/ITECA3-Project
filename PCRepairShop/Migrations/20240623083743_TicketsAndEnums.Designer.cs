@@ -11,9 +11,9 @@ using pcrepairshop.Data;
 
 namespace pcrepairshop.Migrations
 {
-    [DbContext(typeof(pcrepairshopDbContext))]
-    [Migration("20240620164949_RemovedInventory")]
-    partial class RemovedInventory
+    [DbContext(typeof(PCrepairshopDbContext))]
+    [Migration("20240623083743_TicketsAndEnums")]
+    partial class TicketsAndEnums
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,6 +158,57 @@ namespace pcrepairshop.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("pcrepairshop.Models.InitStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InitStatus");
+                });
+
+            modelBuilder.Entity("pcrepairshop.Models.InvType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InvType");
+                });
+
+            modelBuilder.Entity("pcrepairshop.Models.Status", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Status");
+                });
+
             modelBuilder.Entity("pcrepairshop.Models.Ticket", b =>
                 {
                     b.Property<int>("Id")
@@ -168,21 +219,28 @@ namespace pcrepairshop.Migrations
 
                     b.Property<string>("DeviceDescription")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InitialStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InventoryTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
+                    b.Property<int>("User")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserValueId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("InventoryTypeId");
+
+                    b.HasIndex("UserValueId");
 
                     b.ToTable("Ticket");
                 });
@@ -195,10 +253,6 @@ namespace pcrepairshop.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("CellNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -208,7 +262,6 @@ namespace pcrepairshop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -221,11 +274,6 @@ namespace pcrepairshop.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -233,11 +281,6 @@ namespace pcrepairshop.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -251,10 +294,6 @@ namespace pcrepairshop.Migrations
                     b.Property<int>("PostalCode")
                         .HasColumnType("int");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -265,11 +304,6 @@ namespace pcrepairshop.Migrations
                     b.Property<string>("Suburb")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -344,16 +378,19 @@ namespace pcrepairshop.Migrations
 
             modelBuilder.Entity("pcrepairshop.Models.Ticket", b =>
                 {
-                    b.HasOne("pcrepairshop.Models.User", "User")
-                        .WithMany("Tickets")
-                        .HasForeignKey("UserId");
+                    b.HasOne("pcrepairshop.Models.InvType", "InventoryType")
+                        .WithMany()
+                        .HasForeignKey("InventoryTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("User");
-                });
+                    b.HasOne("pcrepairshop.Models.User", "UserValue")
+                        .WithMany()
+                        .HasForeignKey("UserValueId");
 
-            modelBuilder.Entity("pcrepairshop.Models.User", b =>
-                {
-                    b.Navigation("Tickets");
+                    b.Navigation("InventoryType");
+
+                    b.Navigation("UserValue");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pcrepairshop.Data;
 
@@ -11,9 +12,11 @@ using pcrepairshop.Data;
 namespace pcrepairshop.Migrations
 {
     [DbContext(typeof(PCrepairshopDbContext))]
-    partial class PCrepairshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240623092003_TicketAlter")]
+    partial class TicketAlter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
